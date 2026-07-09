@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RFC Calculators — Preview Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <!-- Preview hub layout -->
+  <link rel="stylesheet" href="preview.css" />
+
+  <!-- Each tool keeps its own CSS in its folder -->
+  <link rel="stylesheet" href="calcular-rfc/calcular-rfc.css" />
+  <link rel="stylesheet" href="consultar-rfc/consultar-rfc.css" />
+  <link rel="stylesheet" href="rfc-con-homoclave/rfc-con-homoclave.css" />
+</head>
+<body>
+  <div class="preview-page">
+    <header class="preview-header">
+      <div class="preview-header__inner">
+        <div class="preview-header__top">
+          <div class="preview-header__brand">
+            <span class="preview-header__icon" aria-hidden="true">
+              <i class="fa-solid fa-calculator"></i>
+            </span>
+            <div>
+              <h1 class="preview-header__title">RFC Calculators Preview</h1>
+              <p class="preview-header__subtitle">Switch between standalone embed tools</p>
+            </div>
+          </div>
+          <span class="preview-badge">
+            <i class="fa-solid fa-eye"></i> Preview only
+          </span>
+        </div>
+
+        <nav class="preview-tabs" role="tablist" aria-label="Calculator tools">
+          <button
+            type="button"
+            class="preview-tab is-active"
+            role="tab"
+            id="tab-calcular-rfc"
+            aria-selected="true"
+            aria-controls="panel-calcular-rfc"
+            data-tool="calcular-rfc"
+          >
+            <i class="fa-solid fa-id-card"></i>
+            <span>
+              Calcular RFC
+              <span class="preview-tab__folder">calcular-rfc/</span>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="preview-tab"
+            role="tab"
+            id="tab-consultar-rfc"
+            aria-selected="false"
+            aria-controls="panel-consultar-rfc"
+            data-tool="consultar-rfc"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>
+              Consultar RFC
+              <span class="preview-tab__folder">consultar-rfc/</span>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="preview-tab"
+            role="tab"
+            id="tab-rfc-con-homoclave"
+            aria-selected="false"
+            aria-controls="panel-rfc-con-homoclave"
+            data-tool="rfc-con-homoclave"
+          >
+            <i class="fa-solid fa-key"></i>
+            <span>
+              RFC con Homoclave
+              <span class="preview-tab__folder">rfc-con-homoclave/</span>
+            </span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="preview-main">
+      <section
+        id="panel-calcular-rfc"
+        class="preview-panel is-active"
+        role="tabpanel"
+        aria-labelledby="tab-calcular-rfc"
+        data-tool="calcular-rfc"
+      >
+        <p class="preview-panel__meta">
+          Files:
+          <code>calcular-rfc/calcular-rfc.html</code> ·
+          <code>calcular-rfc/calcular-rfc.css</code> ·
+          <code>calcular-rfc/calcular-rfc.js</code>
+        </p>
+        <div id="calcular-rfc-calculator"></div>
+      </section>
+
+      <section
+        id="panel-consultar-rfc"
+        class="preview-panel"
+        role="tabpanel"
+        aria-labelledby="tab-consultar-rfc"
+        data-tool="consultar-rfc"
+        hidden
+      >
+        <p class="preview-panel__meta">
+          Files:
+          <code>consultar-rfc/consultar-rfc.html</code> ·
+          <code>consultar-rfc/consultar-rfc.css</code> ·
+          <code>consultar-rfc/consultar-rfc.js</code>
+        </p>
+        <div id="consultar-rfc-calculator"></div>
+      </section>
+
+      <section
+        id="panel-rfc-con-homoclave"
+        class="preview-panel"
+        role="tabpanel"
+        aria-labelledby="tab-rfc-con-homoclave"
+        data-tool="rfc-con-homoclave"
+        hidden
+      >
+        <p class="preview-panel__meta">
+          Files:
+          <code>rfc-con-homoclave/rfc-con-homoclave.html</code> ·
+          <code>rfc-con-homoclave/rfc-con-homoclave.css</code> ·
+          <code>rfc-con-homoclave/rfc-con-homoclave.js</code>
+        </p>
+        <div id="rfc-con-homoclave-calculator"></div>
+      </section>
+    </main>
+
+    <footer class="preview-footer">
+      Local preview hub — production embeds use each tool folder separately.
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+
+  <!-- Each tool keeps its own JS in its folder -->
+  <script src="calcular-rfc/calcular-rfc.js"></script>
+  <script src="consultar-rfc/consultar-rfc.js"></script>
+  <script src="rfc-con-homoclave/rfc-con-homoclave.js"></script>
+
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll(".preview-tab");
+      var panels = document.querySelectorAll(".preview-panel");
+
+      function activate(toolId) {
+        tabs.forEach(function (tab) {
+          var active = tab.getAttribute("data-tool") === toolId;
+          tab.classList.toggle("is-active", active);
+          tab.setAttribute("aria-selected", active ? "true" : "false");
+        });
+
+        panels.forEach(function (panel) {
+          var active = panel.getAttribute("data-tool") === toolId;
+          panel.classList.toggle("is-active", active);
+          panel.hidden = !active;
+        });
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          activate(tab.getAttribute("data-tool"));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
